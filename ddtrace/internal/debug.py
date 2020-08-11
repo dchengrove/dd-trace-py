@@ -62,41 +62,42 @@ def collect(tracer):
     # it on the possibly None writer which actually stores it on an API object.
     # Note that the tracer DOES have hostname and port attributes that it
     # sets to the defaults and ignores afterwards.
-    if tracer.writer:
-        if isinstance(tracer.writer, writer.LogWriter):
-            agent_url = "AGENTLESS"
-            hostname = port = uds_path = None
-        else:
-            hostname = tracer.writer.api.hostname
-            port = tracer.writer.api.port
-            uds_path = tracer.writer.api.uds_path
-            https = tracer.writer.api.https
+    agent_url = "AGENTLESS"
+    # if tracer.writer:
+    #     if isinstance(tracer.writer, writer.LogWriter):
+    #         agent_url = "AGENTLESS"
+    #         hostname = port = uds_path = None
+    #     else:
+    #         hostname = tracer.writer.api.hostname
+    #         port = tracer.writer.api.port
+    #         uds_path = tracer.writer.api.uds_path
+    #         https = tracer.writer.api.https
 
-            # If all specified, uds_path will take precedence
-            if uds_path:
-                agent_url = "uds://%s" % uds_path
-            else:
-                proto = "https" if https else "http"
-                agent_url = "%s://%s:%s" % (proto, hostname, port)
-    else:
-        # Else if we can't infer anything from the tracer, rely on the defaults.
-        hostname = tracer.hostname
-        port = tracer.port
-        agent_url = "http://%s:%s" % (hostname, port)
+    #         # If all specified, uds_path will take precedence
+    #         if uds_path:
+    #             agent_url = "uds://%s" % uds_path
+    #         else:
+    #             proto = "https" if https else "http"
+    #             agent_url = "%s://%s:%s" % (proto, hostname, port)
+    # else:
+    #     # Else if we can't infer anything from the tracer, rely on the defaults.
+    #     hostname = tracer.hostname
+    #     port = tracer.port
+    #     agent_url = "http://%s:%s" % (hostname, port)
 
-    if (hostname and port) or uds_path:
-        resp = ping_agent(hostname=hostname, port=port, uds_path=uds_path)
-        if isinstance(resp, ddtrace.api.Response):
-            if resp.status == 200:
-                agent_error = None
-            else:
-                agent_error = "HTTP code %s, reason %s, message %s" % (resp.status, resp.reason, resp.msg)
-        else:
-            # There was an exception
-            agent_error = "Agent not reachable. Exception raised: %s" % str(resp)
-    else:
-        # Serverless case
-        agent_error = None
+    # if (hostname and port) or uds_path:
+    #     resp = ping_agent(hostname=hostname, port=port, uds_path=uds_path)
+    #     if isinstance(resp, ddtrace.api.Response):
+    #         if resp.status == 200:
+    #             agent_error = None
+    #         else:
+    #             agent_error = "HTTP code %s, reason %s, message %s" % (resp.status, resp.reason, resp.msg)
+    #     else:
+    #         # There was an exception
+    #         agent_error = "Agent not reachable. Exception raised: %s" % str(resp)
+    # else:
+    #     # Serverless case
+    #     agent_error = None
 
     is_venv = in_venv()
 
