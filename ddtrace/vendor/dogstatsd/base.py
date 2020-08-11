@@ -211,7 +211,7 @@ class DogStatsd(object):
         json = {
             'name': metric,
             'description': '',
-            'labels': self.format_tags_torch(tags) if tags else {},
+            'labels': {},  # self.format_tags_torch(tags) if tags else {},
             'value': value,
         }
         requests.post(f'http://{host}:9092/metrics/gauge/set', json=json)
@@ -228,7 +228,7 @@ class DogStatsd(object):
         json = {
             'name': metric,
             'description': '',
-            'labels': self.format_tags_torch(tags) if tags else {},
+            'labels': {},  # self.format_tags_torch(tags) if tags else {},
             'value': value,
         }
         requests.post(f'http://{host}:9092/metrics/gauge/inc', json=json)
@@ -246,7 +246,7 @@ class DogStatsd(object):
         json = {
             'name': metric,
             'description': '',
-            'labels': self.format_tags_torch(tags) if tags else {},
+            'labels': {},  # self.format_tags_torch(tags) if tags else {},
             'value': -metric_value,
         }
         requests.post(f'http://{host}:9092/metrics/gauge/dec', json=json)
@@ -262,7 +262,7 @@ class DogStatsd(object):
         json = {
             'name': metric,
             'description': '',
-            'labels': self.format_tags_torch(tags) if tags else {},
+            'labels': {},  # self.format_tags_torch(tags) if tags else {},
             'value': value,
         }
         requests.post(f'http://{host}:9092/metrics/histogram', json=json)
@@ -280,7 +280,7 @@ class DogStatsd(object):
         json = {
             'name': metric,
             'description': '',
-            'labels': self.format_tags_torch(tags) if tags else {},
+            'labels': {},  # self.format_tags_torch(tags) if tags else {},
             'value': value,
         }
         requests.post(f'http://{host}:9092/metrics/summary', json=json)
