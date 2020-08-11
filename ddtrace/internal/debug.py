@@ -63,6 +63,7 @@ def collect(tracer):
     # Note that the tracer DOES have hostname and port attributes that it
     # sets to the defaults and ignores afterwards.
     agent_url = "AGENTLESS"
+    agent_error = None
     # if tracer.writer:
     #     if isinstance(tracer.writer, writer.LogWriter):
     #         agent_url = "AGENTLESS"
