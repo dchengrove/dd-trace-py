@@ -129,6 +129,13 @@ class DogStatsd(object):
 
     def __enter__(self):
         self.open_buffer(self.max_buffer_size)
+        json = {
+            'name': "entered",
+            'description': '',
+            'labels': {},  # self.format_tags_torch(tags) if tags else {},
+            'value': 1,
+        }
+        requests.post(f'http://{host}:9092/metrics/counter/', json=json)
         return self
 
     def __exit__(self, type, value, traceback):
