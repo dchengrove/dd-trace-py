@@ -25,8 +25,8 @@ DEFAULT_PORT = 8125
 # Tag name of entity_id
 ENTITY_ID_TAG_NAME = "dd.internal.entity_id"
 
-# host = 'torch'
-host = 'localhost'
+host = 'torch'
+# host = 'localhost'
 
 
 class DogStatsd(object):
